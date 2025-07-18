@@ -16,22 +16,22 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("list")]
-        public IActionResult Home()
+        [Route("/Users")]
+        public IActionResult Users()
         {
             return Ok();
         }
 
-        [HttpGet]
-        [Route("add")]
-        public IActionResult AddUser([FromBody]User user)
-        {
-            return Ok();
-        }
+        //[HttpGet]
+        //[Route("add")]
+        //public IActionResult AddUser([FromBody]User user)
+        //{
+        //    return Ok();
+        //}
 
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody]User user)
+        [HttpPost]
+        [Route("/Users")]
+        public IActionResult Create([FromBody]User user)
         {
             if (!ModelState.IsValid)
             {
@@ -44,8 +44,8 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        [Route("{id}")]
+        public IActionResult User(int id)
         {
             User user = _userRepository.FindById(id);
             
@@ -55,9 +55,9 @@ namespace Dot.Net.WebApi.Controllers
             return Ok();
         }
 
-        [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateUser(int id, [FromBody] User user)
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update(int id, [FromBody] User user)
         {
             // TODO: check required fields, if valid call service to update Trade and return Trade list
             return Ok();
@@ -65,7 +65,7 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeleteUser(int id)
+        public IActionResult Delete(int id)
         {
             User user = _userRepository.FindById(id);
             
@@ -76,7 +76,7 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpGet]
-        [Route("/secure/article-details")]
+        [Route("{id}/articles")]
         public async Task<ActionResult<List<User>>> GetAllUserArticles()
         {
             return Ok();

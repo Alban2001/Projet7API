@@ -8,23 +8,30 @@ namespace Dot.Net.WebApi.Controllers
     public class BidListController : ControllerBase
     {
         [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody] BidList bidList)
+        [Route("/BidLists")]
+        public IActionResult AllBid()
         {
             // TODO: check data valid and save to db, after saving return bid list
             return Ok();
         }
 
         [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        [Route("{id}")]
+        public IActionResult Bid(int id)
         {
             return Ok();
         }
 
         [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateBid(int id, [FromBody] BidList bidList)
+        [Route("/BidLists")]
+        public IActionResult Create([FromBody] BidList bidList)
+        {
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update(int id, [FromBody] BidList bidList)
         {
             // TODO: check required fields, if valid call service to update Bid and return list Bid
             return Ok();
@@ -32,7 +39,7 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeleteBid(int id)
+        public IActionResult Delete(int id)
         {
             return Ok();
         }

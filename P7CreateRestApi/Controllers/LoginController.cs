@@ -8,7 +8,7 @@ namespace Dot.Net.WebApi.Controllers
     public class LoginController : ControllerBase
     {             
         [HttpPost]
-        [Route("login")]
+        [Route("")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             //TODO: implement the UserManager from Identity to validate User and return a security token.
