@@ -15,8 +15,12 @@ namespace Dot.Net.WebApi.Repositories
 
         public User FindByUserName(string userName)
         {
-            return DbContext.Users.Where(user => user.UserName == userName)
-                                  .FirstOrDefault();
+            User unUser = DbContext.Users.Where(user => user.UserName == userName).FirstOrDefault();
+            if (unUser == null)
+            {
+                return null;
+            }
+            return unUser;
         }
 
         public async Task<List<User>> FindAll()
@@ -26,11 +30,16 @@ namespace Dot.Net.WebApi.Repositories
 
         public void Add(User user)
         {
+            DbContext.Users.Add(user);
         }
 
         public User FindById(int id)
         {
-            return null;
+            User unUser = DbContext.Users.Find(id);
+            if (unUser == null) {
+                return null;
+            }
+            return unUser;
         }
     }
 }
