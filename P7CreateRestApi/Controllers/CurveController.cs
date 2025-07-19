@@ -1,4 +1,5 @@
 using Dot.Net.WebApi.Domain;
+using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dot.Net.WebApi.Controllers
@@ -8,6 +9,12 @@ namespace Dot.Net.WebApi.Controllers
     public class CurveController : ControllerBase
     {
         // TODO: Inject Curve Point service
+        private CurvePointRepository _curvePointRepository;
+
+        public CurveController(CurvePointRepository curvePointRepository)
+        {
+            _curvePointRepository = curvePointRepository;
+        }
 
         [HttpGet]
         [Route("/Curves")]

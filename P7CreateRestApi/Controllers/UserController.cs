@@ -60,6 +60,17 @@ namespace Dot.Net.WebApi.Controllers
         public IActionResult Update(int id, [FromBody] User user)
         {
             // TODO: check required fields, if valid call service to update Trade and return Trade list
+
+            if (user.Id != id)
+                throw new ArgumentException("Invalid user Id:" + id);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _userRepository.Update(user);
+
             return Ok();
         }
 
@@ -71,6 +82,8 @@ namespace Dot.Net.WebApi.Controllers
             
             if (user == null)
                 throw new ArgumentException("Invalid user Id:" + id);
+
+            _userRepository.Delete(user);
 
             return Ok();
         }

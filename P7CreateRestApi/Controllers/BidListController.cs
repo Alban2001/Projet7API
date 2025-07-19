@@ -1,4 +1,5 @@
 using Dot.Net.WebApi.Domain;
+using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dot.Net.WebApi.Controllers
@@ -7,6 +8,13 @@ namespace Dot.Net.WebApi.Controllers
     [Route("[controller]")]
     public class BidListController : ControllerBase
     {
+        private BidListRepository _bidListRepository;
+
+        public BidListController(BidListRepository bidListRepository)
+        {
+            _bidListRepository = bidListRepository;
+        }
+
         [HttpGet]
         [Route("/BidLists")]
         public IActionResult AllBid()

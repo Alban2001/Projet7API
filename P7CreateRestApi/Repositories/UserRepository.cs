@@ -33,6 +33,16 @@ namespace Dot.Net.WebApi.Repositories
             DbContext.Users.Add(user);
         }
 
+        public void Update(User user)
+        {
+            DbContext.Users.Update(user);
+        }
+
+        public void Delete(User user)
+        {
+            DbContext.Users.Remove(user);
+        }
+
         public User FindById(int id)
         {
             User unUser = DbContext.Users.Find(id);

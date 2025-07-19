@@ -1,4 +1,5 @@
 using Dot.Net.WebApi.Controllers.Domain;
+using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dot.Net.WebApi.Controllers
@@ -8,6 +9,12 @@ namespace Dot.Net.WebApi.Controllers
     public class RatingController : ControllerBase
     {
         // TODO: Inject Rating service
+        private RatingRepository _ratingRepository;
+
+        public RatingController(RatingRepository ratingRepository)
+        {
+            _ratingRepository = ratingRepository;
+        }
 
         [HttpGet]
         [Route("/Ratings")]

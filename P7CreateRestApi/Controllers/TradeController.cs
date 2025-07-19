@@ -1,4 +1,5 @@
 using Dot.Net.WebApi.Domain;
+using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dot.Net.WebApi.Controllers
@@ -8,6 +9,12 @@ namespace Dot.Net.WebApi.Controllers
     public class TradeController : ControllerBase
     {
         // TODO: Inject Trade service
+        private TradeRepository _tradeRepository;
+
+        public TradeController(TradeRepository tradeRepository)
+        {
+            _tradeRepository = tradeRepository;
+        }
 
         [HttpGet]
         [Route("/Trades")]

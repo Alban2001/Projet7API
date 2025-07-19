@@ -1,3 +1,4 @@
+using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dot.Net.WebApi.Controllers
@@ -7,6 +8,12 @@ namespace Dot.Net.WebApi.Controllers
     public class RuleNameController : ControllerBase
     {
         // TODO: Inject RuleName service
+        private RuleNameRepository _ruleNameRepository;
+
+        public RuleNameController(RuleNameRepository ruleNameRepository)
+        {
+            _ruleNameRepository = ruleNameRepository;
+        }
 
         [HttpGet]
         [Route("/RuleNames")]
