@@ -24,19 +24,11 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("/Curves")]
+        [Route("/Curve")]
         public IActionResult Create([FromBody]CurvePoint curvePoint)
         {
             return Ok();
         }
-
-        //[HttpGet]
-        //[Route("Curves")]
-        //public IActionResult Validate([FromBody]CurvePoint curvePoint)
-        //{
-        //    // TODO: check data valid and save to db, after saving return bid list
-        //    return Ok();
-        //}
 
         [HttpGet]
         [Route("{id}")]

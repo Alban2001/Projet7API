@@ -24,15 +24,8 @@ namespace Dot.Net.WebApi.Controllers
             return Ok();
         }
 
-        //[HttpGet]
-        //[Route("add")]
-        //public IActionResult AddRatingForm([FromBody]Rating rating)
-        //{
-        //    return Ok();
-        //}
-
         [HttpPost]
-        [Route("/Ratings")]
+        [Route("/Rating")]
         public IActionResult Create([FromBody]Rating rating)
         {
             // TODO: check data valid and save to db, after saving return Rating list

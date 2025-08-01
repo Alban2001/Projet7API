@@ -23,15 +23,8 @@ namespace Dot.Net.WebApi.Controllers
             return Ok();
         }
 
-        //[HttpGet]
-        //[Route("add")]
-        //public IActionResult AddRuleName([FromBody]RuleName trade)
-        //{
-        //    return Ok();
-        //}
-
         [HttpPost]
-        [Route("/RuleNames")]
+        [Route("/RuleName")]
         public IActionResult Create([FromBody]RuleName trade)
         {
             // TODO: check data valid and save to db, after saving return RuleName list

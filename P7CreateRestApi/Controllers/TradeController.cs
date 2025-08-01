@@ -24,15 +24,8 @@ namespace Dot.Net.WebApi.Controllers
             return Ok();
         }
 
-        //[HttpGet]
-        //[Route("add")]
-        //public IActionResult AddTrade([FromBody]Trade trade)
-        //{
-        //    return Ok();
-        //}
-
         [HttpPost]
-        [Route("/Trades")]
+        [Route("/Trade")]
         public IActionResult Create([FromBody]Trade trade)
         {
             // TODO: check data valid and save to db, after saving return Trade list

@@ -22,15 +22,8 @@ namespace Dot.Net.WebApi.Controllers
             return Ok();
         }
 
-        //[HttpGet]
-        //[Route("add")]
-        //public IActionResult AddUser([FromBody]User user)
-        //{
-        //    return Ok();
-        //}
-
         [HttpPost]
-        [Route("/Users")]
+        [Route("/User")]
         public IActionResult Create([FromBody]User user)
         {
             if (!ModelState.IsValid)

@@ -31,7 +31,7 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("/BidLists")]
+        [Route("/BidList")]
         public IActionResult Create([FromBody] BidList bidList)
         {
             return Ok();
