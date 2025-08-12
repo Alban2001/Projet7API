@@ -1,10 +1,12 @@
 using Dot.Net.WebApi.Data;
 using Dot.Net.WebApi.Domain;
 using Microsoft.EntityFrameworkCore;
+using P7CreateRestApi.Repositories;
+using System.Collections.Generic;
 
 namespace Dot.Net.WebApi.Repositories
 {
-    public class CurvePointRepository
+    public class CurvePointRepository : ICurvePointRepository
     {
         public LocalDbContext DbContext { get; }
 
@@ -31,21 +33,24 @@ namespace Dot.Net.WebApi.Repositories
         public void Add(CurvePoint curve)
         {
             DbContext.CurvePoints.Add(curve);
+            DbContext.SaveChanges();
         }
 
         public void Update(CurvePoint curve)
         {
             DbContext.CurvePoints.Update(curve);
+            DbContext.SaveChanges();
         }
 
         public void Delete(CurvePoint curve)
         {
             DbContext.CurvePoints.Remove(curve);
+            DbContext.SaveChanges();
         }
 
-        public CurvePoint FindById(int id)
+        public async Task<CurvePoint> FindById(int id)
         {
-            CurvePoint curve = DbContext.CurvePoints.Find(id);
+            CurvePoint curve = await DbContext.CurvePoints.FirstOrDefaultAsync(cp => cp.Id == id);
             if (curve == null) {
                 return null;
             }

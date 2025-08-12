@@ -8,7 +8,6 @@ namespace Dot.Net.WebApi.Controllers
     [Route("[controller]")]
     public class TradeController : ControllerBase
     {
-        // TODO: Inject Trade service
         private TradeRepository _tradeRepository;
 
         public TradeController(TradeRepository tradeRepository)
@@ -18,42 +17,73 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpGet]
         [Route("/Trades")]
-        public IActionResult Trades()
+        public async Task<IActionResult> Trades()
         {
-            // TODO: find all Trade, add to model
-            return Ok();
+            var trades = await _tradeRepository.FindAll();
+            return Ok(trades);
         }
 
         [HttpPost]
         [Route("/Trade")]
-        public IActionResult Create([FromBody]Trade trade)
+        public async Task<IActionResult> Create([FromBody]Trade trade)
         {
-            // TODO: check data valid and save to db, after saving return Trade list
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _tradeRepository.Add(trade);
+
+            var trades = await _tradeRepository.FindAll();
+
+            return Ok(trades);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult Trade(int id)
+        public async Task<IActionResult> Trade(int id)
         {
-            // TODO: get Trade by Id and to model then show to the form
-            return Ok();
+            Trade trade = await _tradeRepository.FindById(id);
+
+            if (trade == null)
+                throw new ArgumentException("Invalid trade Id:" + id);
+
+            return Ok(trade);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update(int id, [FromBody] Trade trade)
+        public async Task<IActionResult> Update(int id, [FromBody] Trade trade)
         {
-            // TODO: check required fields, if valid call service to update Trade and return Trade list
-            return Ok();
+            if (trade.TradeId != id)
+                throw new ArgumentException("Invalid trade Id:" + id);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _tradeRepository.Update(trade);
+
+            var trades = await _tradeRepository.FindAll();
+
+            return Ok(trades);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            // TODO: Find Trade by Id and delete the Trade, return to Trade list
-            return Ok();
+            Trade trade = await _tradeRepository.FindById(id);
+
+            if (trade == null)
+                throw new ArgumentException("Invalid trade Id:" + id);
+
+            _tradeRepository.Delete(trade);
+
+            var trades = await _tradeRepository.FindAll();
+
+            return Ok(trades);
         }
     }
 }

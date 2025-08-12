@@ -17,14 +17,15 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpGet]
         [Route("/Users")]
-        public IActionResult Users()
+        public async Task<IActionResult> Users()
         {
-            return Ok();
+            var users = await _userRepository.FindAll();
+            return Ok(users);
         }
 
         [HttpPost]
         [Route("/User")]
-        public IActionResult Create([FromBody]User user)
+        public async Task<IActionResult> Create([FromBody]User user)
         {
             if (!ModelState.IsValid)
             {
@@ -33,27 +34,27 @@ namespace Dot.Net.WebApi.Controllers
            
            _userRepository.Add(user);
 
-            return Ok();
+            var users = await _userRepository.FindAll();
+
+            return Ok(users);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult User(int id)
+        public async Task<IActionResult> User(int id)
         {
-            User user = _userRepository.FindById(id);
+            User user = await _userRepository.FindById(id);
             
             if (user == null)
                 throw new ArgumentException("Invalid user Id:" + id);
 
-            return Ok();
+            return Ok(user);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update(int id, [FromBody] User user)
+        public async Task<IActionResult> Update(int id, [FromBody] User user)
         {
-            // TODO: check required fields, if valid call service to update Trade and return Trade list
-
             if (user.Id != id)
                 throw new ArgumentException("Invalid user Id:" + id);
 
@@ -64,21 +65,25 @@ namespace Dot.Net.WebApi.Controllers
 
             _userRepository.Update(user);
 
-            return Ok();
+            var users = await _userRepository.FindAll();
+
+            return Ok(users);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            User user = _userRepository.FindById(id);
+            User user = await _userRepository.FindById(id);
             
             if (user == null)
                 throw new ArgumentException("Invalid user Id:" + id);
 
             _userRepository.Delete(user);
 
-            return Ok();
+            var users = await _userRepository.FindAll();
+
+            return Ok(users);
         }
 
         [HttpGet]

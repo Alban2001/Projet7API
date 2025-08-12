@@ -1,12 +1,13 @@
 using Dot.Net.WebApi.Data;
 using Dot.Net.WebApi.Domain;
 using Microsoft.EntityFrameworkCore;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Repositories
 {
-    public class BidListRepository
+    public class BidListRepository : IBidListRepository
     {
-        public LocalDbContext DbContext { get; }
+        public LocalDbContext DbContext { set; get; }
 
         public BidListRepository(LocalDbContext dbContext)
         {
@@ -31,21 +32,24 @@ namespace Dot.Net.WebApi.Repositories
         public void Add(BidList bidList)
         {
             DbContext.Bids.Add(bidList);
+            DbContext.SaveChanges();
         }
 
         public void Update(BidList bidList)
         {
             DbContext.Bids.Update(bidList);
+            DbContext.SaveChanges();
         }
 
         public void Delete(BidList bidList)
         {
             DbContext.Bids.Remove(bidList);
+            DbContext.SaveChanges();
         }
 
-        public BidList FindById(int id)
+        public async Task<BidList> FindById(int id)
         {
-            BidList unBidList = DbContext.Bids.Find(id);
+            BidList unBidList = await DbContext.Bids.FirstOrDefaultAsync(bd => bd.BidListId == id);
             if (unBidList == null) {
                 return null;
             }

@@ -1,4 +1,5 @@
 using Dot.Net.WebApi.Controllers.Domain;
+using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,42 +19,73 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpGet]
         [Route("/Ratings")]
-        public IActionResult Ratings()
+        public async Task<IActionResult> Ratings()
         {
-            // TODO: find all Rating, add to model
-            return Ok();
+            var ratings = await _ratingRepository.FindAll();
+            return Ok(ratings);
         }
 
         [HttpPost]
         [Route("/Rating")]
-        public IActionResult Create([FromBody]Rating rating)
+        public async Task<IActionResult> Create([FromBody]Rating rating)
         {
-            // TODO: check data valid and save to db, after saving return Rating list
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _ratingRepository.Add(rating);
+
+            var ratings = await _ratingRepository.FindAll();
+
+            return Ok(ratings);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult Rating(int id)
+        public async Task<IActionResult> Rating(int id)
         {
-            // TODO: get Rating by Id and to model then show to the form
-            return Ok();
+            Rating rating = await _ratingRepository.FindById(id);
+
+            if (rating == null)
+                throw new ArgumentException("Invalid rating Id:" + id);
+
+            return Ok(rating);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update(int id, [FromBody] Rating rating)
+        public async Task<IActionResult> Update(int id, [FromBody] Rating rating)
         {
-            // TODO: check required fields, if valid call service to update Rating and return Rating list
-            return Ok();
+            if (rating.Id != id)
+                throw new ArgumentException("Invalid rating Id:" + id);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _ratingRepository.Update(rating);
+
+            var ratings = await _ratingRepository.FindAll();
+
+            return Ok(ratings);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            // TODO: Find Rating by Id and delete the Rating, return to Rating list
-            return Ok();
+            Rating rating = await _ratingRepository.FindById(id);
+
+            if (rating == null)
+                throw new ArgumentException("Invalid rating Id:" + id);
+
+            _ratingRepository.Delete(rating);
+
+            var ratings = await _ratingRepository.FindAll();
+
+            return Ok(ratings);
         }
     }
 }

@@ -17,39 +17,74 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpGet]
         [Route("/BidLists")]
-        public IActionResult AllBid()
+        public async Task<IActionResult> BidListsAsync()
         {
-            // TODO: check data valid and save to db, after saving return bid list
-            return Ok();
+            var bidLists = await _bidListRepository.FindAll();
+
+            return Ok(bidLists);
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult Bid(int id)
+        public async Task<IActionResult> BidList(int id)
         {
-            return Ok();
+            BidList bidList = await _bidListRepository.FindById(id);
+
+            if (bidList == null)
+                throw new ArgumentException("Invalid bidList Id:" + id);
+
+            return Ok(bidList);
         }
 
         [HttpPost]
         [Route("/BidList")]
-        public IActionResult Create([FromBody] BidList bidList)
+        public async Task<IActionResult> Create([FromBody] BidList bidList)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _bidListRepository.Add(bidList);
+
+            var bidLists = await _bidListRepository.FindAll();
+
+            return Ok(bidLists);
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult Update(int id, [FromBody] BidList bidList)
+        public async Task<IActionResult> Update(int id, [FromBody] BidList bidList)
         {
-            // TODO: check required fields, if valid call service to update Bid and return list Bid
-            return Ok();
+            if (bidList.BidListId != id)
+                throw new ArgumentException("Invalid bidList Id:" + id);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _bidListRepository.Update(bidList);
+
+            var bidLists = await _bidListRepository.FindAll();
+
+            return Ok(bidLists);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return Ok();
+            BidList bidList = await _bidListRepository.FindById(id);
+
+            if (bidList == null)
+                throw new ArgumentException("Invalid bidList Id:" + id);
+
+            _bidListRepository.Delete(bidList);
+
+            var bidLists = await _bidListRepository.FindAll();
+
+            return Ok(bidLists);
         }
     }
 }

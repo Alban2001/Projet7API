@@ -3,10 +3,11 @@ using Dot.Net.WebApi.Controllers.Domain;
 using Dot.Net.WebApi.Data;
 using Dot.Net.WebApi.Domain;
 using Microsoft.EntityFrameworkCore;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Repositories
 {
-    public class TradeRepository
+    public class TradeRepository : ITradeRepository
     {
         public LocalDbContext DbContext { get; }
 
@@ -33,21 +34,24 @@ namespace Dot.Net.WebApi.Repositories
         public void Add(Trade trade)
         {
             DbContext.Trades.Add(trade);
+            DbContext.SaveChanges();
         }
 
         public void Update(Trade trade)
         {
             DbContext.Trades.Update(trade);
+            DbContext.SaveChanges();
         }
 
         public void Delete(Trade trade)
         {
             DbContext.Trades.Remove(trade);
+            DbContext.SaveChanges();
         }
 
-        public Trade FindById(int id)
+        public async Task<Trade> FindById(int id)
         {
-            Trade trade = DbContext.Trades.Find(id);
+            Trade trade = await DbContext.Trades.FirstOrDefaultAsync(t => t.TradeId == id);
             if (trade == null) {
                 return null;
             }

@@ -3,10 +3,11 @@ using Dot.Net.WebApi.Controllers.Domain;
 using Dot.Net.WebApi.Data;
 using Dot.Net.WebApi.Domain;
 using Microsoft.EntityFrameworkCore;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Repositories
 {
-    public class RuleNameRepository
+    public class RuleNameRepository : IRuleNameRepository
     {
         public LocalDbContext DbContext { get; }
 
@@ -33,21 +34,24 @@ namespace Dot.Net.WebApi.Repositories
         public void Add(RuleName ruleName)
         {
             DbContext.RuleNames.Add(ruleName);
+            DbContext.SaveChanges();
         }
 
         public void Update(RuleName ruleName)
         {
             DbContext.RuleNames.Update(ruleName);
+            DbContext.SaveChanges();
         }
 
         public void Delete(RuleName ruleName)
         {
             DbContext.RuleNames.Remove(ruleName);
+            DbContext.SaveChanges();
         }
 
-        public RuleName FindById(int id)
+        public async Task<RuleName> FindById(int id)
         {
-            RuleName ruleName = DbContext.RuleNames.Find(id);
+            RuleName ruleName = await DbContext.RuleNames.FirstOrDefaultAsync(rn => rn.Id == id);
             if (ruleName == null) {
                 return null;
             }
