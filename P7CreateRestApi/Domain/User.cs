@@ -1,6 +1,8 @@
-namespace Dot.Net.WebApi.Domain
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace P7CreateRestApi.Domain
 {
-    public class User
+    public class User : IdentityUser
     {
         public int Id { get; set; }
         public string UserName { get; set; }

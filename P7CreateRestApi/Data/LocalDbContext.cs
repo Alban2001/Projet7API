@@ -4,10 +4,14 @@ using Dot.Net.WebApi.Controllers.Domain;
 using Dot.Net.WebApi.Controllers;
 using Dot.Net.WebApi.Repositories;
 using P7CreateRestApi.Repositories;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System.Reflection.Emit;
+using P7CreateRestApi.Domain;
 
 namespace Dot.Net.WebApi.Data
 {
-    public class LocalDbContext : DbContext
+    public class LocalDbContext : IdentityDbContext<User>
     {
         private DataRepository _dataRepository;
 
@@ -19,6 +23,31 @@ namespace Dot.Net.WebApi.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<IdentityUserLogin<string>>(entity =>
+            {
+                entity.HasKey(l => new { l.LoginProvider, l.ProviderKey });
+
+                entity.HasOne<User>()
+                      .WithMany()
+                      .HasForeignKey(l => l.UserId)
+                      .IsRequired()
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+            builder.Entity<IdentityUserRole<string>>(userRole =>
+            {
+                userRole.HasKey(ur => new { ur.UserId, ur.RoleId });
+            });
+            builder.Entity<IdentityUserToken<string>>(entity =>
+            {
+                entity.HasKey(t => new { t.UserId, t.LoginProvider, t.Name });
+
+                entity.HasOne<User>()
+                      .WithMany()
+                      .HasForeignKey(t => t.UserId)
+                      .IsRequired()
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
         }
 
         public DbSet<BidList> Bids { get; set; }

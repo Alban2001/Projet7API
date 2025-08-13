@@ -1,6 +1,8 @@
 using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Domain;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -17,6 +19,7 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpGet]
         [Route("/Users")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Users()
         {
             var users = await _userRepository.FindAll();
@@ -25,6 +28,7 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpPost]
         [Route("/User")]
+        [Authorize(Roles = "ADMIN")]
         public async Task<IActionResult> Create([FromBody]User user)
         {
             if (!ModelState.IsValid)
@@ -41,6 +45,7 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> User(int id)
         {
             User user = await _userRepository.FindById(id);
@@ -53,6 +58,7 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] User user)
         {
             if (user.Id != id)
@@ -72,6 +78,7 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             User user = await _userRepository.FindById(id);

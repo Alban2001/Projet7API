@@ -1,15 +1,16 @@
 using Dot.Net.WebApi.Controllers.Domain;
 using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Dot.Net.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class RatingController : ControllerBase
     {
-        // TODO: Inject Rating service
         private RatingRepository _ratingRepository;
 
         public RatingController(RatingRepository ratingRepository)
