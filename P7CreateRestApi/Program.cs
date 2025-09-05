@@ -9,6 +9,9 @@ using P7CreateRestApi.Domain;
 using P7CreateRestApi.Repositories;
 using System.Text;
 using P7CreateRestApi.Services;
+using Microsoft.OpenApi.Models;
+using System.Xml.Linq;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
@@ -74,6 +77,34 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"]))
     };
+});
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "API : Findexium", Version = "v1" });
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+    {
+        In = ParameterLocation.Header,
+        Description = "Veuillez entrer un jeton valide",
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        BearerFormat = "JWT",
+        Scheme = "Bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+        {
+            {
+                new OpenApiSecurityScheme()
+                {
+                    Reference = new OpenApiReference()
+                    {
+                        Type = ReferenceType.SecurityScheme,
+                        Id = "Bearer"
+                    }
+                },
+                new string[]{}
+            }
+        });
 });
 
 builder.Services.AddTransient<IAuthenticationService, AuthenticationService>();
