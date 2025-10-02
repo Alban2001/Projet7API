@@ -13,9 +13,9 @@ namespace Dot.Net.WebApi.Data
 {
     public class LocalDbContext : IdentityDbContext<User>
     {
-        private DataRepository _dataRepository;
+        private IDataRepository _dataRepository;
 
-        public LocalDbContext(DbContextOptions<LocalDbContext> options, DataRepository dataRepository) : base(options)
+        public LocalDbContext(DbContextOptions<LocalDbContext> options, IDataRepository dataRepository) : base(options)
         {
             _dataRepository = dataRepository;
         }
@@ -55,7 +55,7 @@ namespace Dot.Net.WebApi.Data
         public DbSet<CurvePoint> CurvePoints { get; set; }
         public DbSet<Rating> Ratings { get; set; }
         public DbSet<RuleName> RuleNames { get; set; }
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
 
         public static void Initialize(LocalDbContext context)
         {   
@@ -75,8 +75,8 @@ namespace Dot.Net.WebApi.Data
             if (!context.Trades.Any())
                 context._dataRepository.InitializeTrade(context);
 
-            if (!context.Users.Any())
-                context._dataRepository.InitializeUser(context);
+            //if (!context.Users.Any())
+            //    context._dataRepository.InitializeUser(context);
         }
 
     }

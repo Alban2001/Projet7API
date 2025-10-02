@@ -2,6 +2,7 @@ using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -10,9 +11,9 @@ namespace Dot.Net.WebApi.Controllers
     [Authorize]
     public class BidListController : ControllerBase
     {
-        private BidListRepository _bidListRepository;
+        private IBidListRepository _bidListRepository;
 
-        public BidListController(BidListRepository bidListRepository)
+        public BidListController(IBidListRepository bidListRepository)
         {
             _bidListRepository = bidListRepository;
         }
@@ -51,7 +52,7 @@ namespace Dot.Net.WebApi.Controllers
 
             var bidLists = await _bidListRepository.FindAll();
 
-            return Ok(bidLists);
+            return Created(string.Empty, bidLists);
         }
 
         [HttpPut]
@@ -70,7 +71,7 @@ namespace Dot.Net.WebApi.Controllers
 
             var bidLists = await _bidListRepository.FindAll();
 
-            return Ok(bidLists);
+            return Created(string.Empty, bidLists);
         }
 
         [HttpDelete]
@@ -84,9 +85,7 @@ namespace Dot.Net.WebApi.Controllers
 
             _bidListRepository.Delete(bidList);
 
-            var bidLists = await _bidListRepository.FindAll();
-
-            return Ok(bidLists);
+            return NoContent();
         }
     }
 }

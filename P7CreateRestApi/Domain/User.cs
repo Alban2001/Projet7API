@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace P7CreateRestApi.Domain
 {
     public class User : IdentityUser
     {
-        public int Id { get; set; }
-        public string UserName { get; set; }
+        [NotMapped]
         public string Password { get; set; }
         public string Fullname { get; set; }
-        public string Role { get; set; }
     }
 }

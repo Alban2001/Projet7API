@@ -5,7 +5,7 @@ namespace P7CreateRestApi.Services
 {
     public interface IAuthenticationService
     {
-        User Authenticate(string username, string password);
+        //User Authenticate(string username, string password);
         string GenerateToken(string secret, List<Claim> claims);
     }
 }

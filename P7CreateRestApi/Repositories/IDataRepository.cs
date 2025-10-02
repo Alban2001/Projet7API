@@ -10,6 +10,6 @@ namespace P7CreateRestApi.Repositories
         void InitializeRating(LocalDbContext context);
         void InitializeRuleName(LocalDbContext context);
         void InitializeTrade(LocalDbContext context);
-        void InitializeUser(LocalDbContext context);
+        //void InitializeUser(LocalDbContext context);
     }
 }

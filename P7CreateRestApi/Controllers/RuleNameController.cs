@@ -2,6 +2,7 @@ using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -10,9 +11,9 @@ namespace Dot.Net.WebApi.Controllers
     [Authorize]
     public class RuleNameController : ControllerBase
     {
-        private RuleNameRepository _ruleNameRepository;
+        private IRuleNameRepository _ruleNameRepository;
 
-        public RuleNameController(RuleNameRepository ruleNameRepository)
+        public RuleNameController(IRuleNameRepository ruleNameRepository)
         {
             _ruleNameRepository = ruleNameRepository;
         }
@@ -38,7 +39,7 @@ namespace Dot.Net.WebApi.Controllers
 
             var rulenames = await _ruleNameRepository.FindAll();
 
-            return Ok(rulenames);
+            return Created(string.Empty, rulenames);
         }
 
         [HttpGet]
@@ -69,7 +70,7 @@ namespace Dot.Net.WebApi.Controllers
 
             var rulenames = await _ruleNameRepository.FindAll();
 
-            return Ok(rulenames);
+            return Created(string.Empty, rulenames);
         }
 
         [HttpDelete]
@@ -83,9 +84,7 @@ namespace Dot.Net.WebApi.Controllers
 
             _ruleNameRepository.Delete(rulename);
 
-            var rulenames = await _ruleNameRepository.FindAll();
-
-            return Ok(rulenames);
+            return NoContent();
         }
     }
 }

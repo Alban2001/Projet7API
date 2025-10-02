@@ -48,7 +48,7 @@ namespace Dot.Net.WebApi.Repositories
             DbContext.SaveChanges();
         }
 
-        public async Task<User> FindById(int id)
+        public async Task<User> FindById(string id)
         {
             User unUser = await DbContext.Users.FirstOrDefaultAsync(u => u.Id == id);
             if (unUser == null) {

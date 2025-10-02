@@ -17,13 +17,13 @@ var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
-builder.Services.AddScoped<UserRepository>();
-builder.Services.AddScoped<TradeRepository>();
-builder.Services.AddScoped<RuleNameRepository>();
-builder.Services.AddScoped<RatingRepository>();
-builder.Services.AddScoped<CurvePointRepository>();
-builder.Services.AddScoped<BidListRepository>();
-builder.Services.AddScoped<DataRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ITradeRepository, TradeRepository>();
+builder.Services.AddScoped<IRuleNameRepository, RuleNameRepository>();
+builder.Services.AddScoped<IRatingRepository, RatingRepository>();
+builder.Services.AddScoped<ICurvePointRepository, CurvePointRepository>();
+builder.Services.AddScoped<IBidListRepository, BidListRepository>();
+builder.Services.AddScoped<IDataRepository, DataRepository>();
 
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
@@ -116,6 +116,59 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
+
+
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    string roleName = "ADMIN";
+    string roleUser = "USER";
+    string adminEmail = "admin@findexium.fr";
+    string adminPassword = "Admin126754?!";
+
+    // 1. Création du rôle Admin s’il n’existe pas
+    if (!await roleManager.RoleExistsAsync(roleName))
+    {
+        await roleManager.CreateAsync(new IdentityRole(roleName));
+    }
+    if (!await roleManager.RoleExistsAsync(roleUser))
+    {
+        await roleManager.CreateAsync(new IdentityRole(roleUser));
+    }
+
+    // 2. Création de l'utilisateur admin s’il n’existe pas
+    var adminUser = await userManager.FindByEmailAsync(adminEmail);
+    if (adminUser == null)
+    {
+        var newAdmin = new User
+        {
+            UserName = "admin2",
+            Fullname = "Administrateur",
+            Email = adminEmail,
+            EmailConfirmed = true,
+            PhoneNumberConfirmed = true,
+            TwoFactorEnabled = false,
+            LockoutEnabled = false,
+            AccessFailedCount = 0
+        };
+
+        var createResult = await userManager.CreateAsync(newAdmin, adminPassword);
+
+        if (createResult.Succeeded)
+        {
+            // 3. Ajouter l'utilisateur au rôle Admin
+            var user = await userManager.FindByEmailAsync(adminEmail);
+            await userManager.AddToRoleAsync(user, roleName);
+        }
+        else
+        {
+            foreach (var error in createResult.Errors)
+            {
+                Console.WriteLine($"Erreur création compte admin : {error.Description}");
+            }
+        }
+    }
+
     var context = services.GetRequiredService<LocalDbContext>();
 
     // Crée la base si elle n'existe pas

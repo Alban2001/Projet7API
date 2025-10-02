@@ -3,6 +3,7 @@ using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -11,9 +12,9 @@ namespace Dot.Net.WebApi.Controllers
     [Authorize]
     public class RatingController : ControllerBase
     {
-        private RatingRepository _ratingRepository;
+        private IRatingRepository _ratingRepository;
 
-        public RatingController(RatingRepository ratingRepository)
+        public RatingController(IRatingRepository ratingRepository)
         {
             _ratingRepository = ratingRepository;
         }
@@ -39,7 +40,7 @@ namespace Dot.Net.WebApi.Controllers
 
             var ratings = await _ratingRepository.FindAll();
 
-            return Ok(ratings);
+            return Created(string.Empty, ratings);
         }
 
         [HttpGet]
@@ -70,7 +71,7 @@ namespace Dot.Net.WebApi.Controllers
 
             var ratings = await _ratingRepository.FindAll();
 
-            return Ok(ratings);
+            return Created(string.Empty, ratings);
         }
 
         [HttpDelete]
@@ -84,9 +85,7 @@ namespace Dot.Net.WebApi.Controllers
 
             _ratingRepository.Delete(rating);
 
-            var ratings = await _ratingRepository.FindAll();
-
-            return Ok(ratings);
+            return NoContent();
         }
     }
 }

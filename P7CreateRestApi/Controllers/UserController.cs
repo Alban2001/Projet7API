@@ -1,19 +1,24 @@
 using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using P7CreateRestApi.Domain;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     public class UserController : ControllerBase
     {
-        private UserRepository _userRepository;
+        private readonly UserManager<User> _userManager;
+        private IUserRepository _userRepository;
 
-        public UserController(UserRepository userRepository)
+        public UserController(IUserRepository userRepository, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _userRepository = userRepository;
         }
 
@@ -35,18 +40,22 @@ namespace Dot.Net.WebApi.Controllers
             {
                 return BadRequest();
             }
-           
-           _userRepository.Add(user);
+
+            var user1 = new User { UserName = user.UserName, Email = user.Email, Fullname = user.Fullname };
+            var result = await _userManager.CreateAsync(user1, user.Password);
+            await _userManager.AddToRoleAsync(user1, "USER");
+
+            //_userRepository.Add(user1);
 
             var users = await _userRepository.FindAll();
 
-            return Ok(users);
+            return Created(string.Empty, users);
         }
 
         [HttpGet]
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> User(int id)
+        public async Task<IActionResult> User(string id)
         {
             User user = await _userRepository.FindById(id);
             
@@ -59,7 +68,7 @@ namespace Dot.Net.WebApi.Controllers
         [HttpPut]
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Update(int id, [FromBody] User user)
+        public async Task<IActionResult> Update(string id, [FromBody] User user)
         {
             if (user.Id != id)
                 throw new ArgumentException("Invalid user Id:" + id);
@@ -69,28 +78,26 @@ namespace Dot.Net.WebApi.Controllers
                 return BadRequest();
             }
 
-            _userRepository.Update(user);
+            await _userManager.UpdateAsync(user);
 
             var users = await _userRepository.FindAll();
 
-            return Ok(users);
+            return Created(string.Empty, users);
         }
 
         [HttpDelete]
         [Route("{id}")]
         [Authorize]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string id)
         {
             User user = await _userRepository.FindById(id);
             
             if (user == null)
                 throw new ArgumentException("Invalid user Id:" + id);
 
-            _userRepository.Delete(user);
+            await _userManager.DeleteAsync(user);
 
-            var users = await _userRepository.FindAll();
-
-            return Ok(users);
+            return NoContent();
         }
 
         [HttpGet]

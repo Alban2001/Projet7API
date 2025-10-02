@@ -246,36 +246,5 @@ namespace P7CreateRestApi.Repositories
             context.Trades.AddRange(trades);
             context.SaveChanges();
         }
-
-        public void InitializeUser(LocalDbContext context)
-        {
-            var users = new List<User>
-            {
-                new User
-                {
-                    UserName = "admin",
-                    Password = "admin123", // ⚠️ En prod, ne jamais stocker en clair !
-                    Fullname = "Administrator",
-                    Role = "ADMIN"
-                },
-                new User
-                {
-                    UserName = "trader1",
-                    Password = "trader123",
-                    Fullname = "John Doe",
-                    Role = "TRADER"
-                },
-                new User
-                {
-                    UserName = "user1",
-                    Password = "user123",
-                    Fullname = "Jane Smith",
-                    Role = "USER"
-                }
-            };
-
-            context.Users.AddRange(users);
-            context.SaveChanges();
-        }
     }
 }

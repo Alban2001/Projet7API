@@ -2,6 +2,7 @@ using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -10,9 +11,9 @@ namespace Dot.Net.WebApi.Controllers
     [Authorize]
     public class TradeController : ControllerBase
     {
-        private TradeRepository _tradeRepository;
+        private ITradeRepository _tradeRepository;
 
-        public TradeController(TradeRepository tradeRepository)
+        public TradeController(ITradeRepository tradeRepository)
         {
             _tradeRepository = tradeRepository;
         }
@@ -38,7 +39,7 @@ namespace Dot.Net.WebApi.Controllers
 
             var trades = await _tradeRepository.FindAll();
 
-            return Ok(trades);
+            return Created(string.Empty, trades);
         }
 
         [HttpGet]
@@ -69,7 +70,7 @@ namespace Dot.Net.WebApi.Controllers
 
             var trades = await _tradeRepository.FindAll();
 
-            return Ok(trades);
+            return Created(string.Empty, trades);
         }
 
         [HttpDelete]
@@ -83,9 +84,7 @@ namespace Dot.Net.WebApi.Controllers
 
             _tradeRepository.Delete(trade);
 
-            var trades = await _tradeRepository.FindAll();
-
-            return Ok(trades);
+            return NoContent();
         }
     }
 }

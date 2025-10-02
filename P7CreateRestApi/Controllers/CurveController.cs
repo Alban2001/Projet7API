@@ -2,6 +2,7 @@ using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
@@ -10,9 +11,9 @@ namespace Dot.Net.WebApi.Controllers
     [Authorize]
     public class CurveController : ControllerBase
     {
-        private CurvePointRepository _curvePointRepository;
+        private ICurvePointRepository _curvePointRepository;
 
-        public CurveController(CurvePointRepository curvePointRepository)
+        public CurveController(ICurvePointRepository curvePointRepository)
         {
             _curvePointRepository = curvePointRepository;
         }
@@ -38,7 +39,7 @@ namespace Dot.Net.WebApi.Controllers
 
             var curves = await _curvePointRepository.FindAll();
 
-            return Ok(curves);
+            return Created(string.Empty, curves);
         }
 
         [HttpGet]
@@ -69,7 +70,7 @@ namespace Dot.Net.WebApi.Controllers
 
             var curves = await _curvePointRepository.FindAll();
 
-            return Ok(curves);
+            return Created(string.Empty, curves);
         }
 
         [HttpDelete]
@@ -83,9 +84,7 @@ namespace Dot.Net.WebApi.Controllers
 
             _curvePointRepository.Delete(curvePoint);
 
-            var curves = await _curvePointRepository.FindAll();
-
-            return Ok(curves);
+            return NoContent();
         }
     }
 }
