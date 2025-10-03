@@ -12,8 +12,16 @@ using P7CreateRestApi.Services;
 using Microsoft.OpenApi.Models;
 using System.Xml.Linq;
 using Microsoft.Extensions.Options;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/log.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+builder.Host.UseSerilog();
+
 ConfigurationManager configuration = builder.Configuration;
 
 // Add services to the container.
@@ -187,6 +195,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSerilogRequestLogging();
 
 app.MapControllers();
 
