@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("P7CreateRestAPITest")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+843d6dc84d3844eb20fd179d52ea925ffc091550")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8daaffff36669278bcc8c505fe10b306276ad720")]
 [assembly: System.Reflection.AssemblyProductAttribute("P7CreateRestAPITest")]
 [assembly: System.Reflection.AssemblyTitleAttribute("P7CreateRestAPITest")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
