@@ -1,59 +1,91 @@
 using Dot.Net.WebApi.Controllers.Domain;
+using Dot.Net.WebApi.Domain;
+using Dot.Net.WebApi.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class RatingController : ControllerBase
     {
-        // TODO: Inject Rating service
+        private IRatingRepository _ratingRepository;
 
-        [HttpGet]
-        [Route("list")]
-        public IActionResult Home()
+        public RatingController(IRatingRepository ratingRepository)
         {
-            // TODO: find all Rating, add to model
-            return Ok();
+            _ratingRepository = ratingRepository;
         }
 
         [HttpGet]
-        [Route("add")]
-        public IActionResult AddRatingForm([FromBody]Rating rating)
+        [Route("/Ratings")]
+        public async Task<IActionResult> Ratings()
         {
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody]Rating rating)
-        {
-            // TODO: check data valid and save to db, after saving return Rating list
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
-        {
-            // TODO: get Rating by Id and to model then show to the form
-            return Ok();
+            var ratings = await _ratingRepository.FindAll();
+            return Ok(ratings);
         }
 
         [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateRating(int id, [FromBody] Rating rating)
+        [Route("/Rating")]
+        public async Task<IActionResult> Create([FromBody]Rating rating)
         {
-            // TODO: check required fields, if valid call service to update Rating and return Rating list
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _ratingRepository.Add(rating);
+
+            var ratings = await _ratingRepository.FindAll();
+
+            return Created(string.Empty, ratings);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> Rating(int id)
+        {
+            Rating rating = await _ratingRepository.FindById(id);
+
+            if (rating == null)
+                throw new ArgumentException("Invalid rating Id:" + id);
+
+            return Ok(rating);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] Rating rating)
+        {
+            if (rating.Id != id)
+                throw new ArgumentException("Invalid rating Id:" + id);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _ratingRepository.Update(rating);
+
+            var ratings = await _ratingRepository.FindAll();
+
+            return Created(string.Empty, ratings);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeleteRating(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            // TODO: Find Rating by Id and delete the Rating, return to Rating list
-            return Ok();
+            Rating rating = await _ratingRepository.FindById(id);
+
+            if (rating == null)
+                throw new ArgumentException("Invalid rating Id:" + id);
+
+            _ratingRepository.Delete(rating);
+
+            return NoContent();
         }
     }
 }

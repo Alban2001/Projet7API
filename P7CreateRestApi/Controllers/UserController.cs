@@ -1,82 +1,107 @@
 using Dot.Net.WebApi.Domain;
 using Dot.Net.WebApi.Repositories;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Domain;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+
     public class UserController : ControllerBase
     {
-        private UserRepository _userRepository;
+        private readonly UserManager<User> _userManager;
+        private IUserRepository _userRepository;
 
-        public UserController(UserRepository userRepository)
+        public UserController(IUserRepository userRepository, UserManager<User> userManager)
         {
+            _userManager = userManager;
             _userRepository = userRepository;
         }
 
         [HttpGet]
-        [Route("list")]
-        public IActionResult Home()
+        [Route("/Users")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> Users()
         {
-            return Ok();
+            var users = await _userRepository.FindAll();
+            return Ok(users);
         }
 
-        [HttpGet]
-        [Route("add")]
-        public IActionResult AddUser([FromBody]User user)
-        {
-            return Ok();
-        }
-
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody]User user)
+        [HttpPost]
+        [Route("/User")]
+        [Authorize(Roles = "ADMIN")]
+        public async Task<IActionResult> Create([FromBody]User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest();
             }
-           
-           _userRepository.Add(user);
 
-            return Ok();
+            var user1 = new User { UserName = user.UserName, Email = user.Email, Fullname = user.Fullname };
+            var result = await _userManager.CreateAsync(user1, user.Password);
+            await _userManager.AddToRoleAsync(user1, "USER");
+
+            //_userRepository.Add(user1);
+
+            var users = await _userRepository.FindAll();
+
+            return Created(string.Empty, users);
         }
 
         [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        [Route("{id}")]
+        [Authorize]
+        public async Task<IActionResult> User(string id)
         {
-            User user = _userRepository.FindById(id);
+            User user = await _userRepository.FindById(id);
             
             if (user == null)
                 throw new ArgumentException("Invalid user Id:" + id);
 
-            return Ok();
+            return Ok(user);
         }
 
-        [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateUser(int id, [FromBody] User user)
+        [HttpPut]
+        [Route("{id}")]
+        [Authorize]
+        public async Task<IActionResult> Update(string id, [FromBody] User user)
         {
-            // TODO: check required fields, if valid call service to update Trade and return Trade list
-            return Ok();
+            if (user.Id != id)
+                throw new ArgumentException("Invalid user Id:" + id);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            await _userManager.UpdateAsync(user);
+
+            var users = await _userRepository.FindAll();
+
+            return Created(string.Empty, users);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeleteUser(int id)
+        [Authorize]
+        public async Task<IActionResult> Delete(string id)
         {
-            User user = _userRepository.FindById(id);
+            User user = await _userRepository.FindById(id);
             
             if (user == null)
                 throw new ArgumentException("Invalid user Id:" + id);
 
-            return Ok();
+            await _userManager.DeleteAsync(user);
+
+            return NoContent();
         }
 
         [HttpGet]
-        [Route("/secure/article-details")]
+        [Route("{id}/articles")]
         public async Task<ActionResult<List<User>>> GetAllUserArticles()
         {
             return Ok();

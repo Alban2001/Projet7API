@@ -1,40 +1,91 @@
 using Dot.Net.WebApi.Domain;
+using Dot.Net.WebApi.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using P7CreateRestApi.Repositories;
 
 namespace Dot.Net.WebApi.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize]
     public class BidListController : ControllerBase
     {
-        [HttpGet]
-        [Route("validate")]
-        public IActionResult Validate([FromBody] BidList bidList)
+        private IBidListRepository _bidListRepository;
+
+        public BidListController(IBidListRepository bidListRepository)
         {
-            // TODO: check data valid and save to db, after saving return bid list
-            return Ok();
+            _bidListRepository = bidListRepository;
         }
 
         [HttpGet]
-        [Route("update/{id}")]
-        public IActionResult ShowUpdateForm(int id)
+        [Route("/BidLists")]
+        public async Task<IActionResult> BidListsAsync()
         {
-            return Ok();
+            var bidLists = await _bidListRepository.FindAll();
+
+            return Ok(bidLists);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> BidList(int id)
+        {
+            BidList bidList = await _bidListRepository.FindById(id);
+
+            if (bidList == null)
+                throw new ArgumentException("Invalid bidList Id:" + id);
+
+            return Ok(bidList);
         }
 
         [HttpPost]
-        [Route("update/{id}")]
-        public IActionResult UpdateBid(int id, [FromBody] BidList bidList)
+        [Route("/BidList")]
+        public async Task<IActionResult> Create([FromBody] BidList bidList)
         {
-            // TODO: check required fields, if valid call service to update Bid and return list Bid
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _bidListRepository.Add(bidList);
+
+            var bidLists = await _bidListRepository.FindAll();
+
+            return Created(string.Empty, bidLists);
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] BidList bidList)
+        {
+            if (bidList.BidListId != id)
+                throw new ArgumentException("Invalid bidList Id:" + id);
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            _bidListRepository.Update(bidList);
+
+            var bidLists = await _bidListRepository.FindAll();
+
+            return Created(string.Empty, bidLists);
         }
 
         [HttpDelete]
         [Route("{id}")]
-        public IActionResult DeleteBid(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return Ok();
+            BidList bidList = await _bidListRepository.FindById(id);
+
+            if (bidList == null)
+                throw new ArgumentException("Invalid bidList Id:" + id);
+
+            _bidListRepository.Delete(bidList);
+
+            return NoContent();
         }
     }
 }
