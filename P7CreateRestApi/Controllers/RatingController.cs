@@ -50,7 +50,7 @@ namespace Dot.Net.WebApi.Controllers
             Rating rating = await _ratingRepository.FindById(id);
 
             if (rating == null)
-                throw new ArgumentException("Invalid rating Id:" + id);
+                return NotFound("Rating introuvable");
 
             return Ok(rating);
         }
@@ -60,7 +60,7 @@ namespace Dot.Net.WebApi.Controllers
         public async Task<IActionResult> Update(int id, [FromBody] Rating rating)
         {
             if (rating.Id != id)
-                throw new ArgumentException("Invalid rating Id:" + id);
+                return NotFound("Rating introuvable");
 
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Dot.Net.WebApi.Controllers
             Rating rating = await _ratingRepository.FindById(id);
 
             if (rating == null)
-                throw new ArgumentException("Invalid rating Id:" + id);
+                return NotFound("Rating introuvable");
 
             _ratingRepository.Delete(rating);
 

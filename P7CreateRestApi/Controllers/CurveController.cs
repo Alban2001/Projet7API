@@ -49,7 +49,7 @@ namespace Dot.Net.WebApi.Controllers
             CurvePoint curvePoint = await _curvePointRepository.FindById(id);
 
             if (curvePoint == null)
-                throw new ArgumentException("Invalid curve Id:" + id);
+                return NotFound("Curve introuvable");
 
             return Ok(curvePoint);
         }
@@ -59,7 +59,7 @@ namespace Dot.Net.WebApi.Controllers
         public async Task<IActionResult> Update(int id, [FromBody] CurvePoint curvePoint)
         {
             if (curvePoint.Id != id)
-                throw new ArgumentException("Invalid curve Id:" + id);
+                return NotFound("Curve introuvable");
 
             if (!ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace Dot.Net.WebApi.Controllers
             CurvePoint curvePoint = await _curvePointRepository.FindById(id);
 
             if (curvePoint == null)
-                throw new ArgumentException("Invalid curve Id:" + id);
+                return NotFound("Curve introuvable");
 
             _curvePointRepository.Delete(curvePoint);
 

@@ -28,7 +28,7 @@ namespace Dot.Net.WebApi.Controllers
         }
 
         [HttpPost]
-        [Route("login")]
+        [Route("/Login")]
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var user = _userRepository.FindByUserName(model.UserName);
