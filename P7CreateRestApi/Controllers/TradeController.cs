@@ -49,7 +49,7 @@ namespace Dot.Net.WebApi.Controllers
             Trade trade = await _tradeRepository.FindById(id);
 
             if (trade == null)
-                throw new ArgumentException("Invalid trade Id:" + id);
+                return NotFound("Trade introuvable");
 
             return Ok(trade);
         }
@@ -59,7 +59,7 @@ namespace Dot.Net.WebApi.Controllers
         public async Task<IActionResult> Update(int id, [FromBody] Trade trade)
         {
             if (trade.TradeId != id)
-                throw new ArgumentException("Invalid trade Id:" + id);
+                return NotFound("Trade introuvable");
 
             if (!ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace Dot.Net.WebApi.Controllers
             Trade trade = await _tradeRepository.FindById(id);
 
             if (trade == null)
-                throw new ArgumentException("Invalid trade Id:" + id);
+                return NotFound("Trade introuvable");
 
             _tradeRepository.Delete(trade);
 

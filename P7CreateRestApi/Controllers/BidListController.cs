@@ -34,7 +34,7 @@ namespace Dot.Net.WebApi.Controllers
             BidList bidList = await _bidListRepository.FindById(id);
 
             if (bidList == null)
-                throw new ArgumentException("Invalid bidList Id:" + id);
+                return NotFound("BidList introuvable");
 
             return Ok(bidList);
         }
@@ -60,7 +60,7 @@ namespace Dot.Net.WebApi.Controllers
         public async Task<IActionResult> Update(int id, [FromBody] BidList bidList)
         {
             if (bidList.BidListId != id)
-                throw new ArgumentException("Invalid bidList Id:" + id);
+                return NotFound("BidList introuvable");
 
             if (!ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace Dot.Net.WebApi.Controllers
             BidList bidList = await _bidListRepository.FindById(id);
 
             if (bidList == null)
-                throw new ArgumentException("Invalid bidList Id:" + id);
+                return NotFound("BidList introuvable");
 
             _bidListRepository.Delete(bidList);
 

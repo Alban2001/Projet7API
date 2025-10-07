@@ -147,3 +147,15 @@ D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Proj
 D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\obj\Debug\net8.0\ref\P7CreateRestAPITest.dll
 D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Castle.Core.dll
 D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Moq.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.AspNetCore.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.Enrichers.Environment.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.Enrichers.Thread.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.Extensions.Hosting.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.Extensions.Logging.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.Formatting.Compact.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.Settings.Configuration.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.Sinks.Console.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.Sinks.Debug.dll
+D:\DEVELOPPEUR WEB (BACK END DOTNET) - OPENCLASSROOMS - (2024-2026)\Projets\Projet7API\P7CreateRestAPITest\bin\Debug\net8.0\Serilog.Sinks.File.dll

@@ -49,7 +49,7 @@ namespace Dot.Net.WebApi.Controllers
             RuleName rulename = await _ruleNameRepository.FindById(id);
 
             if (rulename == null)
-                throw new ArgumentException("Invalid rulename Id:" + id);
+                return NotFound("RuleName introuvable");
 
             return Ok(rulename);
         }
@@ -59,7 +59,7 @@ namespace Dot.Net.WebApi.Controllers
         public async Task<IActionResult> Update(int id, [FromBody] RuleName rulename)
         {
             if (rulename.Id != id)
-                throw new ArgumentException("Invalid rulename Id:" + id);
+                return NotFound("RuleName introuvable");
 
             if (!ModelState.IsValid)
             {
@@ -80,7 +80,7 @@ namespace Dot.Net.WebApi.Controllers
             RuleName rulename = await _ruleNameRepository.FindById(id);
 
             if (rulename == null)
-                throw new ArgumentException("Invalid rulename Id:" + id);
+                return NotFound("RuleName introuvable");
 
             _ruleNameRepository.Delete(rulename);
 

@@ -1,39 +1,65 @@
-# DotNetEnglishP7
-Student repo for Project 7 of the Back-end developer: .NET path
+# Rendez votre back-end .NET plus flexible avec une API REST
 
-The project requires the creation of a database using the Entity Framework Code-First approach. 
+**Date de création** : 07 octobre 2025
+**Date de la dernière modification** : 07 octobre 2025
+**Auteur** : Alban VOIRIOT
+**Informations techniques** :
 
-Create the entities as outlined in the PDF linked in the Project 7 Course details. Then use Entity Framework's Code-First approach to create the database and all tables required. 
+- **Technologies** : API REST, C#, .NET, SQL, SQLServer
+- **Version de .NET ** : 6.0
+- **Version de SQLServer** : 18.7.1
 
-In order for the database to be correctly created, you must meet the prerequisites below and change the connection strings to point to the MSSQL Server running on you your local PC.
+## Sommaire
 
-**Prerequisites**: MSSQL Developer 2019 or Express 2019 has been installed along with Microsoft SQL Server Management Studio (SSMS).
+- [Contexte](#contexte)
+- [Installation](#installation)
+  - [Télécharger le projet](#télécharger-le-projet)
+  - [Configurer la base de données](#configurer-la-base-de-données)
+  - [Compiler et lancer l'application](#compiler-et-lancer-lapplication)
+  - [Compte Administrateur](#compte-administrateur)
+- [Guide d'utilisation](#guide-dutilisation)
+  - [Comptes](#comptes)
 
-MSSQL: https://www.microsoft.com/en-us/sql-server/sql-server-downloads
+## Contexte
 
-SSMS: https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
-
-*Note: earlier versions of MSSQL Server should work fine, but have not been tested.
-
-*In the P7CreateRestApi project, open the appsettings.json file.*
-
-You will see the ConnectionStrings section which defines the connection strings for the database used in this application.
-
-      "ConnectionStrings":
-      {
-        "DefaultConnection": "Server=.;Database=YOUR DATABASE NAME;Trusted_Connection=True;MultipleActiveResultSets=true"
-      }
-
-There are different versions of MSSQL (please use MSSQL for this project and not another database) and when setting up the database server, there are different options that will change the configuration, so the connection strings defined may not work.
-
-The connection strings defined in the project are setup for MSSQL Server Standard 2019. The installation has not created an instance name, so the server is just referred to as "." which means the default instance of MSSQL server running on the current machine. The built in Windows user which should be setup in MSSQL server by default during installation.
-
-If you have installed MSSQL Express, the value to use for Server is most likely .\SQLEXPRESS, so for example, your database  connection string would be: -
-
-    "DefaultConnection": "Server=.\SQLEXPRESS;Database=YOUR DATABASE NAME;Trusted_Connection=True;MultipleActiveResultSets=true"
+Ce projet a été conçu dans le cadre de ma formation de développeur d'applications Back-end .NET (OpenClassrooms) sur la création d'une API qui vise à simplifier la communication et l’utilisation des informations post-transaction entre le front et le back-office.
 
 
-You will need to implement **JWT Authentication** and **Authorization** using **Microsoft Identity**. 
+## Installation
 
-If you have trouble connecting, first try to connection using Microsoft SQL Server Management Studio (make sure authentication type  is "Windows Authentication"), or refer to https://sqlserver-help.com/2011/06/19/help-whats-my-sql-server-name/.
-If you still have trouble, please ask your mentor for assistance.
+### Télécharger le projet
+
+=> Pour télécharger le dossier, veuillez effectuer la commande GIT ou directement dans le GIT de Visual Studio : `git clone https://github.com/Alban2001/Projet7API.git` dans un dossier vide puis ouvrir la solution du projet.
+
+### Restaurer les dépendances
+
+=> Veuillez effectuer la commande : `dotnet restore` afin de pouvoir avoir tous les packages Nuget et composants installés pour éviter toute erreur de librairie manquante.
+
+### Configurer la base de données
+
+=> Les entités et le schéma étant déja construit, vous n'avez plus qu'à effectuer la commande suivante : `Update-Database -Context ApplicationDbContext` afin de pouvoir la créer et l'avoir en local
+=> Une fois la base crée, modifier la chaîne de connexion dans le fichier `appsettings.json` :
+
+```
+    "DefaultConnection": "Server=;Database=NOM_DATABASE;Trusted_Connection=True;MultipleActiveResultSets=true",
+```
+
+### Compiler et lancer l'application
+
+=> Cliquez sur le bouton d'exécution et choisissez IIS Express comme option. Une fois l'application lancée, vous serez un simple visiteur et juste la possibilité de visualiser les routes de l'API et utiliser la route **/Login**. En effet, l'utilisation des autres routes est uniquement accessible aux utilisateurs disposant du rôle **ADMIN**.
+
+### Compte Administrateur
+
+=> Le compte administrateur sera créé automatiquement lors du lancement de l'application.
+
+## Guide d'utilisation
+
+### Comptes
+
+=> Afin de pouvoir prendre la main pour utiliser l'API, vous devez utiliser le compte administrateur en vous connectant sur la route **/Login** avec les identifiants suivants :
+- UserName : admin2
+- Mot de passe : Admin126754?!
+
+=> Ensuite, un jeton JWT vous sera donné, copiez le puis sur le bouton **Authorize** avec le petit cadenas tout en haut à droite. Celui-ci étant ouvert cela signifie que vous n'êtes pas encore connecté.
+
+=> Veuillez cliquer dessus, coller votre jeton généré précédemment puis cliquez sur le bouton **Authorize** pour valider. Une fois validé, vous constaterez que tous les cadenas sur toutes les routes seront fermés, cela signifie que vous êtes connecté.

@@ -60,7 +60,7 @@ namespace Dot.Net.WebApi.Controllers
             User user = await _userRepository.FindById(id);
             
             if (user == null)
-                throw new ArgumentException("Invalid user Id:" + id);
+                return NotFound("Utilisateur introuvable");
 
             return Ok(user);
         }
@@ -71,7 +71,7 @@ namespace Dot.Net.WebApi.Controllers
         public async Task<IActionResult> Update(string id, [FromBody] User user)
         {
             if (user.Id != id)
-                throw new ArgumentException("Invalid user Id:" + id);
+                return NotFound("Utilisateur introuvable");
 
             if (!ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace Dot.Net.WebApi.Controllers
             User user = await _userRepository.FindById(id);
             
             if (user == null)
-                throw new ArgumentException("Invalid user Id:" + id);
+                return NotFound("Utilisateur introuvable");
 
             await _userManager.DeleteAsync(user);
 
