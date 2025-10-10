@@ -43,7 +43,8 @@ namespace Dot.Net.WebApi.Controllers
             if (roles != null && roles.Count > 0) {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Email, model.UserName)
+                    new Claim(ClaimTypes.Email, model.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id)
                 };
                 foreach (var role in roles)
                 {
