@@ -85,7 +85,7 @@ namespace P7CreateRestAPITest
             var result = LoginController.Login(model2);
 
             var unauthorizedResult = Assert.IsType<UnauthorizedObjectResult>(result.Result);
-            Assert.Equal("Utilisateur introuvable", unauthorizedResult.Value);
+            Assert.Equal("Identifiant et mot de passe incorrect !", unauthorizedResult.Value);
         }
 
         [Fact]
@@ -106,7 +106,7 @@ namespace P7CreateRestAPITest
             var result = LoginController.Login(model2);
 
             var unauthorizedResult = Assert.IsType<UnauthorizedObjectResult>(result.Result);
-            Assert.Equal("Mot de passe invalide", unauthorizedResult.Value);
+            Assert.Equal("Identifiant et mot de passe incorrect !", unauthorizedResult.Value);
         }
 
         [Fact]

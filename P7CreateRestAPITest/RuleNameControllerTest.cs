@@ -65,7 +65,7 @@ namespace P7CreateRestAPITest
             var result = await RuleNameController.Create(ruleName);
 
             var createdResult = Assert.IsType<CreatedResult>(result);
-            var returnValue = Assert.IsAssignableFrom<IEnumerable<RuleName>>(createdResult.Value);
+            Assert.IsAssignableFrom<IEnumerable<RuleName>>(createdResult.Value);
 
             mockRuleNameRepository.Verify(r => r.Add(It.Is<RuleName>(b => b.Id == 1)), Times.Once);
         }
@@ -120,7 +120,7 @@ namespace P7CreateRestAPITest
             var result = await RuleNameController.Update(id, ruleName);
 
             var createdResult = Assert.IsType<CreatedResult>(result);
-            var returnValue = Assert.IsAssignableFrom<IEnumerable<RuleName>>(createdResult.Value);
+            Assert.IsAssignableFrom<IEnumerable<RuleName>>(createdResult.Value);
 
             mockRuleNameRepository.Verify(r => r.Update(It.Is<RuleName>(b => b.Id == 1)), Times.Once);
         }

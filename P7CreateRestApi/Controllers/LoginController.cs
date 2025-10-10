@@ -32,10 +32,10 @@ namespace Dot.Net.WebApi.Controllers
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var user = _userRepository.FindByUserName(model.UserName);
-            if (user == null) return Unauthorized("Utilisateur introuvable");
+            if (user == null) return Unauthorized("Identifiant et mot de passe incorrect !");
 
             var result = await _signInManager.CheckPasswordSignInAsync(user, model.Password, false);
-            if (!result.Succeeded) return Unauthorized("Mot de passe invalide");
+            if (!result.Succeeded) return Unauthorized("Identifiant et mot de passe incorrect !");
 
             // Récupérer les rôles
             var roles = await _userManager.GetRolesAsync(user);
@@ -43,7 +43,8 @@ namespace Dot.Net.WebApi.Controllers
             if (roles != null && roles.Count > 0) {
                 var claims = new List<Claim>
                 {
-                    new Claim(ClaimTypes.Email, model.UserName)
+                    new Claim(ClaimTypes.Email, model.UserName),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id)
                 };
                 foreach (var role in roles)
                 {

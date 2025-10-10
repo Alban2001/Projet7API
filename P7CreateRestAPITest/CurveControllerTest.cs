@@ -115,7 +115,7 @@ namespace P7CreateRestAPITest
             var result = await curveController.Update(id, curvePoint);
 
             var createdResult = Assert.IsType<CreatedResult>(result);
-            var returnValue = Assert.IsAssignableFrom<IEnumerable<CurvePoint>>(createdResult.Value);
+            Assert.IsAssignableFrom<IEnumerable<CurvePoint>>(createdResult.Value);
 
             mockCurvePointRepository.Verify(r => r.Update(It.Is<CurvePoint>(b => b.Id == 1)), Times.Once);
         }

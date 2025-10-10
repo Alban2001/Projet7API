@@ -32,14 +32,12 @@ namespace Dot.Net.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _tradeRepository.Add(trade);
 
-            var trades = await _tradeRepository.FindAll();
-
-            return Created(string.Empty, trades);
+            return Created(string.Empty, trade);
         }
 
         [HttpGet]
@@ -58,19 +56,19 @@ namespace Dot.Net.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Trade trade)
         {
-            if (trade.TradeId != id)
+            Trade verifTrade = await _tradeRepository.FindById(id);
+
+            if (verifTrade == null)
                 return NotFound("Trade introuvable");
 
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _tradeRepository.Update(trade);
 
-            var trades = await _tradeRepository.FindAll();
-
-            return Created(string.Empty, trades);
+            return Created(string.Empty, trade);
         }
 
         [HttpDelete]

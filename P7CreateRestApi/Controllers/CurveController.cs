@@ -32,14 +32,12 @@ namespace Dot.Net.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _curvePointRepository.Add(curvePoint);
 
-            var curves = await _curvePointRepository.FindAll();
-
-            return Created(string.Empty, curves);
+            return Created(string.Empty, curvePoint);
         }
 
         [HttpGet]
@@ -58,19 +56,19 @@ namespace Dot.Net.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] CurvePoint curvePoint)
         {
-            if (curvePoint.Id != id)
+            CurvePoint verifCurvePoint = await _curvePointRepository.FindById(id);
+
+            if (verifCurvePoint == null)
                 return NotFound("Curve introuvable");
 
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _curvePointRepository.Update(curvePoint);
 
-            var curves = await _curvePointRepository.FindAll();
-
-            return Created(string.Empty, curves);
+            return Created(string.Empty, curvePoint);
         }
 
         [HttpDelete]
