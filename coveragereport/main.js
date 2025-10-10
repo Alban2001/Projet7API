@@ -216,7 +216,7 @@ var assemblies = [
       { "name": "Dot.Net.WebApi.Controllers.BidListController", "rp": "P7CreateRestApi_BidListController.html", "cl": 28, "ucl": 11, "cal": 39, "tl": 91, "cb": 5, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Dot.Net.WebApi.Controllers.CurveController", "rp": "P7CreateRestApi_CurveController.html", "cl": 28, "ucl": 11, "cal": 39, "tl": 90, "cb": 5, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Dot.Net.WebApi.Controllers.Domain.Rating", "rp": "P7CreateRestApi_Rating.html", "cl": 5, "ucl": 0, "cal": 5, "tl": 11, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Dot.Net.WebApi.Controllers.HomeController", "rp": "P7CreateRestApi_HomeController.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 22, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Dot.Net.WebApi.Controllers.HomeController", "rp": "P7CreateRestApi_HomeController.html", "cl": 0, "ucl": 6, "cal": 6, "tl": 21, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Dot.Net.WebApi.Controllers.LoginController", "rp": "P7CreateRestApi_LoginController.html", "cl": 26, "ucl": 0, "cal": 26, "tl": 60, "cb": 9, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Dot.Net.WebApi.Controllers.RatingController", "rp": "P7CreateRestApi_RatingController.html", "cl": 28, "ucl": 11, "cal": 39, "tl": 91, "cb": 5, "tb": 10, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "Dot.Net.WebApi.Controllers.RuleName", "rp": "P7CreateRestApi_RuleName.html", "cl": 7, "ucl": 0, "cal": 7, "tl": 13, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
@@ -242,7 +242,7 @@ var assemblies = [
       { "name": "P7CreateRestApi.Models.LoginModel", "rp": "P7CreateRestApi_LoginModel.html", "cl": 2, "ucl": 0, "cal": 2, "tl": 9, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "P7CreateRestApi.Repositories.DataRepository", "rp": "P7CreateRestApi_DataRepository.html", "cl": 0, "ucl": 224, "cal": 224, "tl": 250, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
       { "name": "P7CreateRestApi.Services.AuthenticationService", "rp": "P7CreateRestApi_AuthenticationService.html", "cl": 0, "ucl": 12, "cal": 12, "tl": 26, "cb": 0, "tb": 0, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
-      { "name": "Program", "rp": "P7CreateRestApi_Program.html", "cl": 0, "ucl": 144, "cal": 144, "tl": 193, "cb": 0, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
+      { "name": "Program", "rp": "P7CreateRestApi_Program.html", "cl": 0, "ucl": 144, "cal": 144, "tl": 202, "cb": 0, "tb": 12, "cm": 0, "fcm": 0, "tm": 0, "lch": [], "bch": [], "mch": [], "mfch": [], "hc": [], "metrics": { } },
     ]},
 ];
 

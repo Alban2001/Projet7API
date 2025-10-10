@@ -60,7 +60,7 @@ namespace P7CreateRestAPITest
             var result = await UserController.Create(user);
 
             var createdResult = Assert.IsType<CreatedResult>(result);
-            var returnValue = Assert.IsAssignableFrom<IEnumerable<User>>(createdResult.Value);
+            Assert.IsAssignableFrom<IEnumerable<User>>(createdResult.Value);
 
             mockUserRepositoryManager.Verify(um => um.CreateAsync(It.Is<User>(u => u.UserName == "avoiriot"), "Password1234"), Times.Once);
             mockUserRepositoryManager.Verify(um => um.AddToRoleAsync(It.Is<User>(u => u.UserName == "avoiriot"), "USER"), Times.Once);
@@ -100,7 +100,7 @@ namespace P7CreateRestAPITest
             var result = await UserController.Update(id, user);
 
             var createdResult = Assert.IsType<CreatedResult>(result);
-            var returnValue = Assert.IsAssignableFrom<IEnumerable<User>>(createdResult.Value);
+            Assert.IsAssignableFrom<IEnumerable<User>>(createdResult.Value);
 
             mockUserRepositoryManager.Verify(um => um.UpdateAsync(It.Is<User>(u => u.UserName == "avoiriot")), Times.Once);
         }

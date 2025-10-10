@@ -61,7 +61,7 @@ namespace P7CreateRestAPITest
             var result = await RatingController.Create(rating);
 
             var createdResult = Assert.IsType<CreatedResult>(result);
-            var returnValue = Assert.IsAssignableFrom<IEnumerable<Rating>>(createdResult.Value);
+            Assert.IsAssignableFrom<IEnumerable<Rating>>(createdResult.Value);
 
             mockRatingRepository.Verify(r => r.Add(It.Is<Rating>(b => b.Id == 1)), Times.Once);
         }
@@ -112,7 +112,7 @@ namespace P7CreateRestAPITest
             var result = await RatingController.Update(id, rating);
 
             var createdResult = Assert.IsType<CreatedResult>(result);
-            var returnValue = Assert.IsAssignableFrom<IEnumerable<Rating>>(createdResult.Value);
+            Assert.IsAssignableFrom<IEnumerable<Rating>>(createdResult.Value);
 
             mockRatingRepository.Verify(r => r.Update(It.Is<Rating>(b => b.Id == 1)), Times.Once);
         }

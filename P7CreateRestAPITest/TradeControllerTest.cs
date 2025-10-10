@@ -93,7 +93,7 @@ namespace P7CreateRestAPITest
             var result = await TradeController.Create(trade);
 
             var createdResult = Assert.IsType<CreatedResult>(result);
-            var returnValue = Assert.IsAssignableFrom<IEnumerable<Trade>>(createdResult.Value);
+            Assert.IsAssignableFrom<IEnumerable<Trade>>(createdResult.Value);
 
             mockTradeRepository.Verify(r => r.Add(It.Is<Trade>(b => b.TradeId == 1)), Times.Once);
         }
@@ -176,7 +176,7 @@ namespace P7CreateRestAPITest
             var result = await TradeController.Update(id, trade);
 
             var createdResult = Assert.IsType<CreatedResult>(result);
-            var returnValue = Assert.IsAssignableFrom<IEnumerable<Trade>>(createdResult.Value);
+            Assert.IsAssignableFrom<IEnumerable<Trade>>(createdResult.Value);
 
             mockTradeRepository.Verify(r => r.Update(It.Is<Trade>(b => b.TradeId == 1)), Times.Once);
         }
