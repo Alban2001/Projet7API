@@ -59,7 +59,9 @@ namespace Dot.Net.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Rating rating)
         {
-            if (rating.Id != id)
+            Rating verifRating = await _ratingRepository.FindById(id);
+
+            if (verifRating == null)
                 return NotFound("Rating introuvable");
 
             if (!ModelState.IsValid)

@@ -58,7 +58,9 @@ namespace Dot.Net.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] RuleName rulename)
         {
-            if (rulename.Id != id)
+            RuleName verifRulename = await _ruleNameRepository.FindById(id);
+
+            if (verifRulename == null)
                 return NotFound("RuleName introuvable");
 
             if (!ModelState.IsValid)

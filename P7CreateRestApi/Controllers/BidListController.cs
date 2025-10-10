@@ -20,7 +20,7 @@ namespace Dot.Net.WebApi.Controllers
 
         [HttpGet]
         [Route("/BidLists")]
-        public async Task<IActionResult> BidListsAsync()
+        public async Task<IActionResult> BidLists()
         {
             var bidLists = await _bidListRepository.FindAll();
 
@@ -59,7 +59,10 @@ namespace Dot.Net.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] BidList bidList)
         {
-            if (bidList.BidListId != id)
+
+            BidList verifBidList = await _bidListRepository.FindById(id);
+
+            if (verifBidList == null)
                 return NotFound("BidList introuvable");
 
             if (!ModelState.IsValid)

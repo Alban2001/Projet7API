@@ -70,7 +70,9 @@ namespace Dot.Net.WebApi.Controllers
         [Authorize]
         public async Task<IActionResult> Update(string id, [FromBody] User user)
         {
-            if (user.Id != id)
+            User verifUser = await _userRepository.FindById(id);
+
+            if (verifUser == null)
                 return NotFound("Utilisateur introuvable");
 
             if (!ModelState.IsValid)

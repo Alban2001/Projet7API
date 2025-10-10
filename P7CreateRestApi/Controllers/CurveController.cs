@@ -58,7 +58,9 @@ namespace Dot.Net.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] CurvePoint curvePoint)
         {
-            if (curvePoint.Id != id)
+            CurvePoint verifCurvePoint = await _curvePointRepository.FindById(id);
+
+            if (verifCurvePoint == null)
                 return NotFound("Curve introuvable");
 
             if (!ModelState.IsValid)

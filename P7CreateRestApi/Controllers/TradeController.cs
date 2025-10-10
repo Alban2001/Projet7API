@@ -58,7 +58,9 @@ namespace Dot.Net.WebApi.Controllers
         [Route("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Trade trade)
         {
-            if (trade.TradeId != id)
+            Trade verifTrade = await _tradeRepository.FindById(id);
+
+            if (verifTrade == null)
                 return NotFound("Trade introuvable");
 
             if (!ModelState.IsValid)
