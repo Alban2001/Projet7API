@@ -38,18 +38,14 @@ namespace Dot.Net.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             var user1 = new User { UserName = user.UserName, Email = user.Email, Fullname = user.Fullname };
             var result = await _userManager.CreateAsync(user1, user.Password);
             await _userManager.AddToRoleAsync(user1, "USER");
 
-            //_userRepository.Add(user1);
-
-            var users = await _userRepository.FindAll();
-
-            return Created(string.Empty, users);
+            return Created(string.Empty, user);
         }
 
         [HttpGet]
@@ -77,14 +73,12 @@ namespace Dot.Net.WebApi.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             await _userManager.UpdateAsync(user);
 
-            var users = await _userRepository.FindAll();
-
-            return Created(string.Empty, users);
+            return Created(string.Empty, user);
         }
 
         [HttpDelete]

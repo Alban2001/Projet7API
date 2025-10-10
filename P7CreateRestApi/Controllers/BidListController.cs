@@ -45,21 +45,18 @@ namespace Dot.Net.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _bidListRepository.Add(bidList);
 
-            var bidLists = await _bidListRepository.FindAll();
-
-            return Created(string.Empty, bidLists);
+            return Created(string.Empty, bidList);
         }
 
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] BidList bidList)
         {
-
             BidList verifBidList = await _bidListRepository.FindById(id);
 
             if (verifBidList == null)
@@ -67,14 +64,12 @@ namespace Dot.Net.WebApi.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _bidListRepository.Update(bidList);
 
-            var bidLists = await _bidListRepository.FindAll();
-
-            return Created(string.Empty, bidLists);
+            return Created(string.Empty, bidList);
         }
 
         [HttpDelete]

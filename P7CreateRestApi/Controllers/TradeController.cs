@@ -32,14 +32,12 @@ namespace Dot.Net.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _tradeRepository.Add(trade);
 
-            var trades = await _tradeRepository.FindAll();
-
-            return Created(string.Empty, trades);
+            return Created(string.Empty, trade);
         }
 
         [HttpGet]
@@ -65,14 +63,12 @@ namespace Dot.Net.WebApi.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _tradeRepository.Update(trade);
 
-            var trades = await _tradeRepository.FindAll();
-
-            return Created(string.Empty, trades);
+            return Created(string.Empty, trade);
         }
 
         [HttpDelete]

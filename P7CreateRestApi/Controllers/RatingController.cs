@@ -33,14 +33,12 @@ namespace Dot.Net.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _ratingRepository.Add(rating);
 
-            var ratings = await _ratingRepository.FindAll();
-
-            return Created(string.Empty, ratings);
+            return Created(string.Empty, rating);
         }
 
         [HttpGet]
@@ -66,14 +64,12 @@ namespace Dot.Net.WebApi.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _ratingRepository.Update(rating);
 
-            var ratings = await _ratingRepository.FindAll();
-
-            return Created(string.Empty, ratings);
+            return Created(string.Empty, rating);
         }
 
         [HttpDelete]

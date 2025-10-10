@@ -32,14 +32,12 @@ namespace Dot.Net.WebApi.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _ruleNameRepository.Add(rulename);
 
-            var rulenames = await _ruleNameRepository.FindAll();
-
-            return Created(string.Empty, rulenames);
+            return Created(string.Empty, rulename);
         }
 
         [HttpGet]
@@ -65,14 +63,12 @@ namespace Dot.Net.WebApi.Controllers
 
             if (!ModelState.IsValid)
             {
-                return BadRequest();
+                return ValidationProblem(ModelState);
             }
 
             _ruleNameRepository.Update(rulename);
 
-            var rulenames = await _ruleNameRepository.FindAll();
-
-            return Created(string.Empty, rulenames);
+            return Created(string.Empty, rulename);
         }
 
         [HttpDelete]
